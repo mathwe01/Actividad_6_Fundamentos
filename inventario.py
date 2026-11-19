@@ -1,4 +1,4 @@
-from utilidades import validar_no_vacio
+from utilidades import validar_no_vacio, validar_fecha
 
 DISPONIBLE = "disponible"
 PRESTADO = "prestado"
@@ -42,6 +42,10 @@ def prestar_equipo(inventario, prestamos, codigo, estudiante, fecha):
     if not ok:
         return False, res
     estudiante = res
+    ok, res = validar_fecha(fecha)
+    if not ok:
+        return False, res
+    fecha = res
     inventario[codigo]["estado"] = PRESTADO
     prestamos.append({"codigo": codigo, "estudiante": estudiante, "fecha": fecha})
     return True, f"Préstamo de {codigo} a {estudiante} registrado."
